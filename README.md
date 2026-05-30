@@ -179,6 +179,19 @@ All model inference in the starter runs on Nebius → https://tokenfactory.nebiu
 Your team gets **3 minutes** to pitch and demo tomorrow. **No slide decks** — we want to see live,
 working (or spinning-up) code.
 
+## 🎥 RxTwin — Voice Demo (2 minutes)
+
+Experience the full voice workflow of RxTwin, including:
+- Real-time ASR (Speechmatics)
+- Rasa CALM reasoning
+- Compliance ticket logging
+- Cross-shift memory recall
+- Rime TTS responses
+
+▶️ **Watch the demo:**  
+https://github.com/DivyaPrakash04/MyTwinAgent-rasa-bos-hackathon-2026/blob/main/Working_VoiceDemo_2026-05-30%20152317.mp4
+
+
 ### Prizes
 
 | 🏆 Prize | What wins it |
