@@ -14,11 +14,4 @@ flows:
         description: The pharmacist's email address where ticket updates should be sent.
       - action: action_create_ticket
       - action: utter_ticket_created
-        next:
-          - if: slots.issue_category == "temperature"
-            then:
-              - call: ops_assistant
-                next: END
-          - else:
-              - noop: true
-                next: END
+        next: END

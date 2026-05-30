@@ -1,0 +1,27 @@
+# End-to-end test for RxTwin pharmaceutical compliance flows.
+# Custom actions are stubbed so this runs without the action server:
+#   RASA_PRO_BETA_STUB_CUSTOM_ACTION=true rasa test e2e tests/e2e
+
+stub_custom_actions:
+  action_create_ticket:
+    events:
+      - event: slot
+        name: ticket_id
+        value: "TCK-7508"
+
+test_cases:
+  - test_case: pharmacist logs compliance ticket
+    steps:
+      - user: "I need to log a compliance ticket."
+        assertions:
+          - flow_started:
+              operator: all
+              flow_ids:
+                - log_support_ticket
+      - user: "Fridge B temperature alarm. It dropped to minus one Celsius."
+      - user: "It's a temperature issue and it's urgent."
+      - user: "divya@rxlab.com"
+        assertions:
+          - action_executed: action_create_ticket
+          - bot_uttered:
+              utter_name: utter_ticket_created

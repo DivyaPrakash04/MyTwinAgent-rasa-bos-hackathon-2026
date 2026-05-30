@@ -2,76 +2,64 @@
 
 <h1>🤖 RxTwin — Pharmaceutical Compliance AI Coworker</h1>
 
-<h3>Boston Tech Week 2026 · Hosted by <a href="https://rasa.com">Rasa</a> · Kendall Square</h3>
+<h3>Boston Tech Week 2026 · Team RXtwin</h3>
 
 <p>
-  <b>An always-on AI coworker for pharmaceutical compliance workflows.</b><br/>
-  RxTwin helps pharmacists log clinical exceptions, track incidents across shifts, and maintain
-  regulatory compliance — with persistent memory and voice interaction.
+  <b>TL;DR: RxTwin automates pharmaceutical compliance by letting pharmacists log and resolve incidents through natural voice, with persistent memory across shifts.</b>
 </p>
 
 <p>
-  <a href="https://www.linkedin.com/in/profrodai/"><img src="https://img.shields.io/badge/Hosted_by-Rod-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Hosted by Rod"/></a>
-  <a href="https://hello.rasa.ai"><img src="https://img.shields.io/badge/Try-Hello_Rasa-5A17EE?style=for-the-badge&logo=rasa&logoColor=white" alt="Try Hello Rasa"/></a>
-  <a href="https://info.rasa.com/community"><img src="https://img.shields.io/badge/Join-Community-7C3AED?style=for-the-badge&logo=discourse&logoColor=white" alt="Join the Community"/></a>
-  <a href="https://rasa.com/docs/"><img src="https://img.shields.io/badge/Read-Docs-1FA6A6?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Read the Docs"/></a>
+  An always-on AI coworker for pharmaceutical compliance workflows. RxTwin helps pharmacists log clinical exceptions, track incidents across shifts, and maintain regulatory compliance — with persistent memory and voice interaction.
 </p>
 
-<p>
-  <img src="https://img.shields.io/badge/Pitch_Deadline-Sat_05%2F30_·_4%3A00_PM-E11D48?style=for-the-badge" alt="Pitch deadline Saturday 5/30 4PM"/>
-  <img src="https://img.shields.io/badge/Team_Size-Max_5-475569?style=for-the-badge" alt="Max team size 5"/>
-</p>
+> [!NOTE]
+> **Why it matters:**
+> - Reduces compliance errors
+> - Lowers regulatory risk
+> - Saves pharmacist time
 
 <p>
-  <a href="#-start-here">Quickstart</a> ·
-  <a href="#-the-stack--resources">Stack</a> ·
-  <a href="#-presentation--judging">Prizes</a> ·
-  <a href="#-team-formation">Teams</a> ·
-  <a href="starter/">Starter Template</a>
+  <a href="#-problem">Problem</a> ·
+  <a href="#-solution">Solution</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-demo">Demo</a> ·
+  <a href="#-quickstart">Quickstart</a>
 </p>
 
 </div>
 
 <hr/>
 
-> [!IMPORTANT]
-> **📶 Wi-Fi:** `TBD`  ·  **Password:** `TBD`
-> **🗓️ Pitch submission deadline:** **Saturday 05/30, 4:00 PM**
-> **💬 Community chat:** https://info.rasa.com/community
+<a id="-problem"></a>
 
-<a id="-start-here"></a>
+## 🎯 The Problem
 
-## ⚡ Start Here — the Starter Template
+Pharmacies face strict regulatory requirements for logging clinical exceptions, but existing systems are:
 
-> [!TIP]
-> **Don't start from a blank repo.** We've shipped a best-of-breed scaffold in [`starter/`](starter/) —
-> a working Rasa coworker with voice and agentic capabilities already wired up — so you can build
-> *your* idea instead of boilerplate.
+- **Manual and error-prone** — paper-based or fragmented digital workflows
+- **Context-blind** — no memory across shift changes
+- **Slow** — documentation delays increase regulatory risk
+- **Cognitively demanding** — pharmacists juggle compliance tasks during busy operations
 
-```bash
-cd starter
-cp .env.example .env      # paste your keys
-make install
-make verify               # full pre-flight: keys, deps, files, services
-make train
-# then, in three terminals:
-make run-actions  |  make run-rasa  |  make demo-text
-```
+**Impact:** Inconsistent reporting, increased audit exposure, and potential patient safety risks from missed temperature excursions or storage issues.
 
-📖 **Full walkthrough:** [`starter/README.md`](starter/README.md)
+<a id="-solution"></a>
 
-### How it fits together
+## 💡 The Solution: RxTwin
 
-```
-            ears                   brain                  voice
- user  ──▶  Speechmatics ASR  ──▶  Rasa CALM (agent)  ──▶  Rime TTS  ──▶  user
-                                        │
-                                        ├── Nebius Token Factory  (LLM inference)
-                                        └── MCP tools (your APIs)  [Level 2: agentic]
-```
+RxTwin is a hands-free, voice-driven AI coworker that:
 
-The starter ships with deterministic flows (a support-ticket coworker), **cross-session memory**, a
-**live voice loop**, and an optional **native Rasa ReAct sub-agent + MCP** level. Fork it and make it yours.
+- **Logs incidents instantly** through natural speech — no typing required
+- **Guides pharmacists** through required regulatory steps deterministically
+- **Maintains persistent memory** across shifts — recalls active incidents automatically
+- **Generates audit-ready documentation** with timestamps and notifications
+- **Reduces cognitive load** during busy operations by handling compliance workflows
+
+**Key Differentiators:**
+- ✅ **Cross-shift memory** — remembers incidents across shift changes
+- ✅ **Deterministic flows** — no hallucinations in compliance-critical scenarios
+- ✅ **Voice-first interaction** — hands-free logging while handling medications
+- ✅ **Real-world workflow fit** — designed for actual pharmacy operations
 
 ## 💬 Sample Conversation
 
@@ -111,135 +99,177 @@ The starter ships with deterministic flows (a support-ticket coworker), **cross-
 
 This demonstrates **persistence** (remembering incidents across shifts), **resilience** (deterministic ticket logging), and a **real enterprise workflow** (pharmaceutical compliance).
 
-<hr/>
+<a id="-architecture"></a>
 
-<a id="-the-stack--resources"></a>
+## 🏗️ Architecture
 
-## 🛠️ The Stack & Resources
+RxTwin is built on the Rasa CALM framework with a voice-first architecture:
 
-To qualify for prizes, your continuous AI coworker should leverage **Rasa** alongside our partner ecosystem.
+```
+            ears                   brain                  voice
+ user  ──▶  Speechmatics ASR  ──▶  Rasa CALM (agent)  ──▶  Rime TTS  ──▶  user
+                                        │
+                                        ├── Nebius Token Factory  (LLM inference)
+                                        └── Persistent ticket store (.data/tickets.json)
+```
 
-<div align="center">
+### Core Components
 
-<a href="https://rasa.com/docs/"><img src="https://img.shields.io/badge/Rasa-CALM-5A17EE?style=for-the-badge&logo=rasa&logoColor=white" alt="Rasa"/></a>
-<a href="https://tokenfactory.nebius.com"><img src="https://img.shields.io/badge/Nebius-Token_Factory-1E293B?style=for-the-badge" alt="Nebius"/></a>
-<a href="https://www.speechmatics.com"><img src="https://img.shields.io/badge/Speechmatics-ASR_+_TTS-00B4A0?style=for-the-badge" alt="Speechmatics"/></a>
-<a href="https://rime.ai"><img src="https://img.shields.io/badge/Rime-TTS-FF5C39?style=for-the-badge" alt="Rime"/></a>
-<a href="https://github.com/neuphonic/neutts"><img src="https://img.shields.io/badge/Neuphonic-Local_TTS-0EA5E9?style=for-the-badge" alt="Neuphonic"/></a>
-<a href="https://github.com/arklexai/arksim"><img src="https://img.shields.io/badge/Arklex-arksim-64748B?style=for-the-badge" alt="Arklex"/></a>
-
-</div>
-
-### 🧠 Core framework — Rasa
-
-Build conversational resilience and enterprise-grade context management with **CALM**.
-
-| Resource | Link |
-| :-- | :-- |
-| 📚 Docs | https://rasa.com/docs/ |
-| 🎮 Try Hello Rasa (no setup) | https://hello.rasa.ai |
-| 🔑 Developer Edition license | https://rasa.com/rasa-pro-developer-edition-license-key-request |
-| 🚀 Starter template | [`starter/`](starter/) |
-
-### 🔌 LLM inference — Nebius Token Factory
-
-All model inference in the starter runs on Nebius → https://tokenfactory.nebius.com
-*Copy the exact model id / region from your console — names below are suggestions.*
-
-| Role | Suggested models |
-| :-- | :-- |
-| **Command generator** (the agent's reasoning) | `Qwen3-235B-A22B-Instruct-2507` · `gpt-oss-120b` · `DeepSeek-V3.2` |
-| **Agentic sub-agent** (tool calling) | `MiniMax-M2.5` · `Kimi-K2.6` · `GLM-5` |
-
-
-<h3 align="center">
-  <picture>
-    <img alt="Rasa Banner" src="https://github.com/RasaHQ/.github/blob/readme/update-hello-rasa-community/assets/banner-rasa-1200x300.png?raw=true">
-  </picture>
-</h3>
-
-### 🎙️ Voice & partner quickstarts
-
-| Partner | Role | Link |
+| Component | Role | Technology |
 | :-- | :-- | :-- |
-| **Speechmatics** | the coworker's *ears* (ASR + TTS) | https://www.speechmatics.com |
-| **Rime** | the coworker's *voice* (TTS) | https://rime.ai |
-| **Neuphonic** | free, local self-hosted TTS | https://github.com/neuphonic/neutts |
-| **Arklex** | Simulation-based agent evals | https://github.com/arklexai/arksim |
-| **Nebius** | State-of-the-art LLM Inference | https://tokenfactory.nebius.com/ |
+| **ASR** | Speech-to-text (ears) | Speechmatics |
+| **Agent Brain** | Conversational reasoning | Rasa CALM |
+| **LLM Inference** | Command generation | Nebius Token Factory |
+| **TTS** | Text-to-speech (voice) | Rime |
+| **Memory** | Cross-session persistence | JSON ticket store |
+| **Flows** | Deterministic compliance workflows | Custom Rasa CALM flows |
 
-> The starter wires Speechmatics + Rime + Nebius together for you. Swap in any partner.
+### Custom Flows
 
-<hr/>
+- **`log_compliance_ticket`** — Guides pharmacists through incident logging with validation
+- **`greet_and_resume`** — Shift resume with active incident recall
+- **`resolve_incident`** — Incident resolution with audit trail
+- **`end_shift`** — Shift handoff summary
 
-<a id="-presentation--judging"></a>
+### Why This Architecture Matters
 
-## 🏆 Presentation & Judging
-
-Your team gets **3 minutes** to pitch and demo tomorrow. **No slide decks** — we want to see live,
-working (or spinning-up) code.
-
-## 🎥 RxTwin — Voice Demo (2 minutes)
-
-Experience the full voice workflow of RxTwin, including:
-- Real-time ASR (Speechmatics)
-- Rasa CALM reasoning
-- Compliance ticket logging
-- Cross-shift memory recall
-- Rime TTS responses
-
-▶️ **Watch the demo:**  
-https://github.com/DivyaPrakash04/MyTwinAgent-rasa-bos-hackathon-2026/blob/main/Working_VoiceDemo_2026-05-30%20152317.mp4
-
-
-### Prizes
-
-| 🏆 Prize | What wins it |
-| :-- | :-- |
-| **Most Resilient Long-Term Agent** | Retains memory and handles long context windows without hallucinating. |
-| **Best Voice Coworker** | Clean audio, low latency, real triage / meetings. |
-| **Most Creative Enterprise Use Case** | A genuinely practical back-office or operations workflow. |
-
-### What to look for
-
-- **🧠 Persistence & memory** — does it hold context across a long session?
-- **🛡️ Resilience** — does it stay grounded instead of making things up under pressure?
-- **🏢 Real workflow fit** — would a team actually use this?
-- **⚙️ Built on Rasa** — projects on the Rasa stack get special consideration, especially for
-  *Most Resilient Long-Term Agent*. The starter is the fast path here.
-
-> The [starter README](starter/README.md) shows how each prize track maps to a concrete extension of the scaffold.
+- **Deterministic flows** prevent hallucination in compliance-critical scenarios
+- **Persistent memory** ensures continuity across shift changes
+- **Voice-first design** enables hands-free operation during medication handling
+- **Modular stack** allows swapping components (ASR/TTS/LLM) without re-engineering
 
 <hr/>
 
-<a id="-team-formation"></a>
+<a id="-demo"></a>
 
-## 👥 Team Formation & Idea Board
+## 🎥 Demo
 
-Don't have a team?
+**Watch the 2-minute voice demo:**
 
-1. Gather near the projector screen right after the keynote.
-2. Post your ideas or skills in the [community chat](https://info.rasa.com/community).
-3. Max team size: **5**.
+[https://github.com/DivyaPrakash04/MyTwinAgent-rasa-bos-hackathon-2026/blob/main/Working_VoiceDemo_2026-05-30%20152317.mp4](https://github.com/DivyaPrakash04/MyTwinAgent-rasa-bos-hackathon-2026/blob/main/Working_VoiceDemo_2026-05-30%20152317.mp4)
+
+**Demo highlights:**
+- Real-time ASR (Speechmatics) transcribing pharmacist speech
+- Rasa CALM reasoning through compliance flows
+- Automated ticket creation with incident ID TCK-7508
+- Cross-shift memory recall on session resume
+- Rime TTS providing natural voice responses
+
+<a id="-quickstart"></a>
+
+## 🚀 Quickstart
+
+Run RxTwin locally with voice interaction:
+
+```bash
+cd starter
+cp .env.example .env      # Add your API keys (Rasa, Nebius, Speechmatics, Rime)
+make install
+make verify               # Pre-flight check
+make train
+```
+
+**Start the system (3 terminals):**
+
+```bash
+# Terminal 1: Action server
+make run-actions
+
+# Terminal 2: Rasa server
+make run-rasa
+
+# Terminal 3: Voice demo
+make demo
+```
+
+**For text-only demo:**
+```bash
+make demo-text
+```
+
+**One-click PowerShell scripts (Windows):**
+- `DEMO_START.ps1` — Start all servers + voice demo
+- `DEMO_PRESENTATION.ps1` — Record presentation mode
+- `DEMO_RECORDING.ps1` — Text-only with transcript
+
+📖 **Full setup guide:** [`starter/README.md`](starter/README.md)
+
+## 🧪 Testing
+
+RxTwin includes end-to-end tests for pharmaceutical compliance flows.
+
+**Test Results:**
+```
+Accuracy By Assertion Type
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Assertion Type  ┃ Accuracy ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│  flow_started   │ 100.00%  │
+│ action_executed │ 100.00%  │
+│   bot_uttered   │ 100.00%  │
+└─────────────────┴──────────┘
+0 failed, 1 passed
+```
+
+**Run E2E Tests:**
+```bash
+cd starter
+.venv\Scripts\Activate.ps1
+$env:RASA_PRO_BETA_STUB_CUSTOM_ACTION="true"
+rasa test e2e tests/e2e
+```
+
+The test covers the core compliance ticket logging flow with temperature excursion scenarios.
 
 <hr/>
 
-## 📦 What's in This Repo
+## 🏆 Hackathon Alignment
+
+RxTwin addresses the **Most Creative Enterprise Use Case** prize by:
+
+- ✅ Solving a genuine pharmaceutical compliance problem
+- ✅ Implementing persistent memory across sessions
+- ✅ Using deterministic flows to prevent hallucination
+- ✅ Providing voice-first interaction for hands-free operation
+- ✅ Built entirely on the Rasa CALM framework
+
+**Key capabilities for judging:**
+- **🧠 Persistence** — Remembers incidents across shift changes
+- **🛡️ Resilience** — Deterministic flows prevent hallucination
+- **🏢 Real workflow fit** — Designed for actual pharmacy operations
+- **⚙️ Rasa-native** — Built on Rasa CALM with custom flows
+
+<hr/>
+
+## 📦 Project Structure
 
 ```
-README.md     ← you are here (event source of truth)
-starter/      ← the scaffold: clone it, fork it, ship it
-  ├─ Rasa CALM flows + custom actions (+ persistent memory)
-  ├─ voice/        Speechmatics ASR + Rime TTS over Rasa's REST API
-  └─ agentic/      optional: native Rasa ReAct sub-agent + MCP tools
+README.md                    ← Project overview and documentation
+starter/                     ← Main application code
+  ├─ actions/                ← Custom actions for compliance workflows
+  ├─ data/flows/             ← Rasa CALM flows (log_ticket, greet_resume, resolve)
+  ├─ domain/                  ← Slots, responses, and domain configuration
+  ├─ voice/                   ← Speechmatics ASR + Rime TTS integration
+  ├─ agentic/                ← Optional: ReAct sub-agent + MCP tools
+  └─ .data/tickets.json      ← Persistent ticket storage
 ```
+
+## 🤝 Contributing
+
+This is a hackathon project. For questions or collaboration:
+- **GitHub:** https://github.com/DivyaPrakash04/MyTwinAgent-rasa-bos-hackathon-2026
+- **Team:** RXtwin
+
+## 📄 License
+
+See LICENSE file for details.
+
+---
 
 <div align="center">
 
-<br/>
+**Built for Boston Tech Week 2026 · Team RXtwin**
 
-### Now go build something that lasts. 🚀
-
-<a href="#-always-on-ai-coworker-hackathon"><img src="https://img.shields.io/badge/⬆-Back_to_top-475569?style=for-the-badge" alt="Back to top"/></a>
+<a href="#"><img src="https://img.shields.io/badge/⬆-Back_to_top-475569?style=for-the-badge" alt="Back to top"/></a>
 
 </div>

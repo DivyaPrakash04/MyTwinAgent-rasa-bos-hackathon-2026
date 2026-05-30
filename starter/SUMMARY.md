@@ -68,3 +68,72 @@ UI recommendation
 
 Files added in this pass
 - `DEMO_START.ps1`, `DEMO_RECORDING.ps1` (fixed), `endpoints.light.yml`, `DEMO.md`, `SUMMARY.md`.
+
+---
+
+# RxTwin Session Updates (May 30, 2026)
+
+## README Enhancements
+- Added TL;DR sentence at top for quick scanning
+- Added "Why it matters" business impact section (reduces compliance errors, lowers regulatory risk, saves pharmacist time)
+- Updated team name to RXtwin throughout
+- Restructured README with RxTwin-specific sections: Problem, Solution, Architecture, Demo, Quickstart
+- Added sample conversation from demo showing compliance ticket logging and shift resume
+
+## GitHub Cleanup
+- Added mysteplog.md and Purpose.md to .gitignore (local development notes)
+- Removed these files from git tracking
+- Committed and pushed changes to GitHub (DivyaPrakash04 account)
+
+## E2E Testing
+- Created `starter/tests/e2e/rxtwin_compliance.yml` for RxTwin pharmaceutical compliance flows
+- Test covers: pharmacist logs compliance ticket with temperature excursion
+- Removed broken agentic sub-agent call from `support_triage.yml` (was causing training failures)
+- Retrained model successfully
+- E2E test passing with 100% accuracy on all assertions
+
+### Test Results Summary
+```
+======================================================================================================================================================
+Accuracy By Assertion Type
+======================================================================================================================================================
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Assertion Type  ┃ Accuracy ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│  flow_started   │ 100.00%  │
+│ action_executed │ 100.00%  │
+│   bot_uttered   │ 100.00%  │
+└─────────────────┴──────────┘
+======================================================================================================================================================
+short test summary info
+======================================================================================================================================================
+0 failed, 1 passed
+======================================================================================================================================================
+```
+
+### Running E2E Tests
+```powershell
+cd starter
+.\.venv\Scripts\Activate.ps1
+$env:RASA_PRO_BETA_STUB_CUSTOM_ACTION="true"
+rasa test e2e tests/e2e
+```
+
+## Flow Fixes
+- Removed `call: ops_assistant` from `log_support_ticket` flow (agentic sub-agent not properly configured)
+- Simplified flow to END after ticket creation
+- Removed original `log_support_ticket.yml` e2e test (replaced with RxTwin-specific test)
+
+## Project Status
+- Demo working successfully (compliance ticket logging + shift resume with cross-session memory)
+- E2E test passing
+- README polished for hackathon judges
+- GitHub repo clean and ready
+- Team name: RXtwin
+- Demo video recorded and linked in README
+
+## Uncommitted Changes
+- README.md (enhanced with TL;DR and business impact)
+- support_triage.yml (fixed agentic call)
+- log_support_ticket.yml (removed, replaced with rxtwin_compliance.yml)
+- rxtwin_compliance.yml (new e2e test for RxTwin flows)
