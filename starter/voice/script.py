@@ -1,14 +1,22 @@
-"""The scripted user turns for the demo.
-
-We pre-generate these as audio (Speechmatics TTS, 16 kHz) so the demo is
-deterministic and never depends on a flaky live microphone on stage. Each line is
-written so the Command Generator can naturally fill the support-ticket slots.
-"""
-
+# One short answer per slot prompt — matches the order CALM asks for.
 USER_TURNS = [
-    "Hi, I need to open a support ticket for my team.",
-    "Our billing dashboard has been showing the wrong invoice totals for enterprise "
-    "customers since this morning.",
-    "Yes, it's a billing problem and it's urgent — finance can't close the books.",
-    "Great, you can send updates to rod@example.com.",
+    "Hello RxTwin, this is Pharmacist Divya.",
+    "I need to log a compliance ticket please.",
+    "Fridge B temperature alarm. It dropped to minus one Celsius.",
+    "temperature",
+    "urgent",
+    "divya@rxlab.com",
 ]
+
+RESUME_TURNS = [
+    "Hey RxTwin, Pharmacist Divya is back on shift.",
+    "Yes, we moved all the Shingrix vials to Fridge A safely.",
+    "That is all for now. Thanks RxTwin.",
+]
+
+PRESENTATION_ACTS = [
+    {"title": "Act 1 — Report temperature excursion", "turns": USER_TURNS, "new_session": False},
+    {"title": "Act 2 — Shift resume (new session)", "turns": RESUME_TURNS, "new_session": True},
+]
+
+ALL_PRESENTATION_TURNS = USER_TURNS + RESUME_TURNS

@@ -1,0 +1,10 @@
+flows:
+  resolve_open_incident:
+    description: >
+      Confirm an open compliance or temperature incident is finished. Triggers when the
+      pharmacist confirms quarantine steps are done, vaccines were moved to a backup fridge,
+      Shingrix vials were relocated, or the active incident follow-up is complete.
+    steps:
+      - action: action_resolve_latest_incident
+      - action: utter_incident_resolved
+        next: END

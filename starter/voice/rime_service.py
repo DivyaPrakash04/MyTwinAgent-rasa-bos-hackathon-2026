@@ -30,6 +30,11 @@ class RimeTTS:
     async def synthesize(self, text: str, speaker: str = DEFAULT_SPEAKER) -> bytes:
         if not text.strip():
             raise RimeError("Cannot synthesize empty text.")
+        from voice.speech_util import RIME_MAX_CHARS, sanitize_for_speech
+
+        text = sanitize_for_speech(text, max_chars=RIME_MAX_CHARS)
+        if not text.strip():
+            raise RimeError("Cannot synthesize empty text after sanitizing.")
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         payload = {
             "text": text,

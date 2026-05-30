@@ -27,7 +27,7 @@ def search_runbooks(query: str) -> str:
 
 @mcp.tool()
 def get_runbook(runbook_id: str) -> str:
-    """Fetch the full body of a runbook by id, e.g. RB-002."""
+    """Fetch the full body of a runbook by id, e.g. SOP-501."""
     for r in RUNBOOKS:
         if r["id"].lower() == runbook_id.strip().lower():
             return json.dumps(r)

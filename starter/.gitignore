@@ -373,3 +373,6 @@ tests/audio_responses/
  
 # Session debug logs (re-created each run — never commit)
 .logs/
+
+# Presentation recordings (re-create with DEMO_PRESENTATION.ps1)
+recordings/

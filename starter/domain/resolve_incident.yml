@@ -1,0 +1,8 @@
+version: "3.1"
+
+actions:
+  - action_resolve_latest_incident
+
+responses:
+  utter_incident_resolved:
+    - text: "Perfect. I've marked incident {last_incident_id} as resolved and logged the Shingrix transfer to Fridge A."

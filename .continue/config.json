@@ -1,0 +1,29 @@
+{
+  "models": [
+    {
+      "title": "Qwen2.5 Coder 7B",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:7b"
+    },
+    {
+      "title": "Llama 3.1 8B",
+      "provider": "ollama",
+      "model": "llama3.1:8b"
+    },
+
+      "title": "Qwen2.5 Coder 3B",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:3b"
+    },
+    {
+      "title": "Llama 3.2 3B",
+      "provider": "ollama",
+      "model": "llama3.2:3b"
+    },
+    {
+      "title": "Nomic Embed Text",
+      "provider": "ollama",
+      "model": "nomic-embed-text:latest"
+    }
+  ]
+}

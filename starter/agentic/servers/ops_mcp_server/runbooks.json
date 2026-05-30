@@ -1,20 +1,14 @@
 [
   {
-    "id": "RB-001",
-    "title": "Reset a customer's SSO access",
-    "tags": ["access", "sso", "login"],
-    "body": "1. Find the user in the admin console. 2. Revoke active sessions. 3. Send a re-enrolment link. 4. Confirm MFA re-binds on next login."
+    "id": "SOP-501",
+    "title": "Vaccine Storage & Refrigerator Temperature Excursion Protocol",
+    "tags": ["temperature", "excursion", "vaccines", "coldchain"],
+    "body": "Under SOP-501: Vaccines must be stored between 2 and 8 Celsius. If temperature drops below 0 Celsius, immediately move Shingrix and COVID-19 vials to backup Fridge A. Next, print quarantine labels for Fridge B. Finally, log the excursion ticket to prompt a maintenance request."
   },
   {
-    "id": "RB-002",
-    "title": "Investigate wrong invoice totals",
-    "tags": ["billing", "invoices", "finance"],
-    "body": "1. Pull the billing run id. 2. Compare line items to the metering export. 3. Check for duplicate usage events. 4. Re-run reconciliation and notify finance."
-  },
-  {
-    "id": "RB-003",
-    "title": "Triage a production incident",
-    "tags": ["incident", "oncall", "bug"],
-    "body": "1. Declare severity. 2. Open an incident channel. 3. Assign an incident commander. 4. Mitigate first, root-cause later. 5. Post a timeline."
+    "id": "SOP-502",
+    "title": "Controlled Substance Double-Count Discrepancy Protocol",
+    "tags": ["controlled", "drugs", "discrepancy", "inventory"],
+    "body": "Under SOP-502: If count mismatch occurs on schedule II drugs, immediately halt dispensing. Double-count the physical stock with a second licensed pharmacist. If discrepancy persists, log audit log and notify regional supervisor within 2 hours."
   }
 ]

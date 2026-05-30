@@ -1,14 +1,13 @@
 <div align="center">
 
-<h1>🤖 Always-On AI Coworker Hackathon</h1>
+<h1>🤖 RxTwin — Pharmaceutical Compliance AI Coworker</h1>
 
 <h3>Boston Tech Week 2026 · Hosted by <a href="https://rasa.com">Rasa</a> · Kendall Square</h3>
 
 <p>
-  <b>We're done with the 5-minute AI demo.</b><br/>
-  Over two days we're building <b>persistent, long-term digital coworkers</b> — agents that handle real
-  workflows, hold memory across long sessions, and integrate into a team's day without losing context or
-  hallucinating under pressure.
+  <b>An always-on AI coworker for pharmaceutical compliance workflows.</b><br/>
+  RxTwin helps pharmacists log clinical exceptions, track incidents across shifts, and maintain
+  regulatory compliance — with persistent memory and voice interaction.
 </p>
 
 <p>
@@ -73,6 +72,44 @@ make run-actions  |  make run-rasa  |  make demo-text
 
 The starter ships with deterministic flows (a support-ticket coworker), **cross-session memory**, a
 **live voice loop**, and an optional **native Rasa ReAct sub-agent + MCP** level. Fork it and make it yours.
+
+## 💬 Sample Conversation
+
+**Act 1 — Logging a Compliance Ticket**
+
+```
+👤 Pharmacist Divya: "Hello RxTwin, this is Pharmacist Divya."
+🤖 RxTwin: "Hi Pharmacist Divya! All sensors are green."
+
+👤 Pharmacist Divya: "I need to log a compliance ticket please."
+🤖 RxTwin: "I can log that compliance ticket for you. What is the active exception or issue in the lab?"
+
+👤 Pharmacist Divya: "Fridge B temperature alarm. It dropped to minus one Celsius."
+🤖 RxTwin: "Understood. How urgent is this clinical exception — low, medium, high, or urgent?"
+
+👤 Pharmacist Divya: "urgent"
+🤖 RxTwin: "What's the best email address to send compliance notifications to?"
+
+👤 Pharmacist Divya: "divya@rxlab.com"
+🤖 RxTwin: "Done — I've logged incident TCK-7508 as a urgent-priority temperature exception.
+          Shift updates will go to divya@rxlab.com."
+```
+
+**Act 2 — Shift Resume (Cross-Session Memory)**
+
+```
+👤 Pharmacist Divya: "Hey RxTwin, Pharmacist Divya is back on shift."
+🤖 RxTwin: "Welcome back, Pharmacist Divya! I see we have an active Fridge B temperature excursion
+          (incident TCK-7508: Fridge B temperature alarm."
+
+👤 Pharmacist Divya: "Yes, we moved all the Shingrix vials to Fridge A safely."
+🤖 RxTwin: "Perfect. I've marked incident TCK-7508 as resolved and logged the Shingrix transfer to Fridge A."
+
+👤 Pharmacist Divya: "That is all for now. Thanks RxTwin."
+🤖 RxTwin: "Thanks for working with me — I'll be right here whenever you need me."
+```
+
+This demonstrates **persistence** (remembering incidents across shifts), **resilience** (deterministic ticket logging), and a **real enterprise workflow** (pharmaceutical compliance).
 
 <hr/>
 

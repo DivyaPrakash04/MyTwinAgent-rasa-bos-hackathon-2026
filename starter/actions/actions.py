@@ -1,4 +1,4 @@
-"""Custom actions for the AI coworker.
+"""Custom actions for the MyTwinAgent (RxTwin) clinical coworker.
 
 Principle (from the Rasa playbook): flows own the *conversation logic*; actions do
 the *raw work* and hand results back as slots for the flow to branch on.
@@ -36,11 +36,20 @@ class ActionCreateTicket(Action):
             "category": tracker.get_slot("issue_category"),
             "priority": tracker.get_slot("issue_priority"),
             "email": tracker.get_slot("contact_email"),
+            "pharmacist": tracker.get_slot("user_name"),
             "status": "open",
             "created_at": utc_now(),
         }
         save_tickets(tickets)
-        return [SlotSet("ticket_id", ticket_id)]
+        # Update cross-session handoff slots so the next session can resume
+        # and confirm to the user which ticket was created.
+        dispatcher.utter_message(text=f"Incident {ticket_id} opened.")
+        return [
+            SlotSet("ticket_id", ticket_id),
+            SlotSet("has_active_incident", True),
+            SlotSet("last_incident_id", ticket_id),
+            SlotSet("last_incident_summary", tickets[ticket_id].get("summary")),
+        ]
 
 
 class ActionLookupTicket(Action):
@@ -65,4 +74,79 @@ class ActionLookupTicket(Action):
             SlotSet("lookup_ticket_id", ticket_id),
             SlotSet("ticket_status", ticket.get("status", "open")),
             SlotSet("ticket_summary", ticket.get("summary", "")),
+        ]
+
+
+class ActionGreetTwin(Action):
+    """Checks for active open incidents to facilitate cross-session shift resumption."""
+    def name(self) -> Text:
+        return "action_greet_twin"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        tickets = load_tickets()
+        # Filter all tickets that have an "open" status to find pending exceptions
+        open_tickets = [
+            (tid, info)
+            for tid, info in tickets.items()
+            if info.get("status") == "open"
+        ]
+        
+        if open_tickets:
+            # Take the latest open compliance ticket
+            latest_tid, latest_info = open_tickets[-1]
+            events = [
+                SlotSet("has_active_incident", True),
+                SlotSet("last_incident_id", latest_tid),
+                SlotSet("last_incident_summary", latest_info.get("summary", "Vaccine Fridge Temperature Excursion")),
+            ]
+            pharmacist = latest_info.get("pharmacist")
+            if pharmacist and not tracker.get_slot("user_name"):
+                events.append(SlotSet("user_name", pharmacist))
+            return events
+        
+        return [
+            SlotSet("has_active_incident", False),
+            SlotSet("last_incident_id", None),
+            SlotSet("last_incident_summary", None),
+        ]
+
+
+class ActionResolveLatestIncident(Action):
+    """Mark the latest open incident resolved (Act 2 demo — quarantine complete)."""
+
+    def name(self) -> Text:
+        return "action_resolve_latest_incident"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        tickets = load_tickets()
+        open_tickets = [
+            (tid, info)
+            for tid, info in tickets.items()
+            if info.get("status") == "open"
+        ]
+        if not open_tickets:
+            dispatcher.utter_message(
+                text="I don't see an open incident to update right now."
+            )
+            return [SlotSet("has_active_incident", False)]
+
+        latest_tid, latest_info = open_tickets[-1]
+        tickets[latest_tid]["status"] = "resolved"
+        tickets[latest_tid]["resolved_at"] = utc_now()
+        save_tickets(tickets)
+        return [
+            SlotSet("last_incident_id", latest_tid),
+            SlotSet("last_incident_summary", latest_info.get("summary", "")),
+            SlotSet("has_active_incident", False),
+            SlotSet("ticket_id", latest_tid),
         ]

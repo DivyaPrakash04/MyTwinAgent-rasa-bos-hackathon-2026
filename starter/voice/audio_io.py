@@ -16,5 +16,10 @@ def play_wav_bytes(audio: bytes) -> None:
 
         play(AudioSegment.from_file(io.BytesIO(audio), format="wav"))
     except Exception as exc:  # noqa: BLE001
-        logger.warning("Audio playback unavailable (%s). Install ffmpeg + simpleaudio, "
-                       "or use --text mode.", exc)
+        msg = (
+            f"Audio playback failed ({exc}). "
+            "Install ffmpeg and add it to PATH, then re-run. "
+            "See RECORDING.md for details."
+        )
+        logger.warning(msg)
+        print(f"\n[WARNING] {msg}\n", flush=True)

@@ -12,9 +12,7 @@ flows:
           - if: slots.ticket_found
             then:
               - action: utter_ticket_status
-                next: wrap_up
+                next: END
           - else:
               - action: utter_ticket_not_found
-                next: wrap_up
-      - id: wrap_up
-        action: utter_can_do_something_else
+                next: END

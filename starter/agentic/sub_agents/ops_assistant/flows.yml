@@ -1,0 +1,5 @@
+flows:
+  ops_assistant:
+    description: "Minimal placeholder flow for ops_assistant sub-agent. Resolves call steps."
+    steps:
+      - action: utter_can_do_something_else

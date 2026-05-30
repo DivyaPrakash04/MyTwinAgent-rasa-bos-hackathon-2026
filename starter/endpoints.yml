@@ -17,8 +17,8 @@ action_endpoint:
 model_groups:
   # ── Command Generator brain ────────────────────────────────────────────────
   # Needs to follow instructions precisely and emit clean Rasa commands.
-  # Good picks on Nebius: Qwen3-235B-A22B-Instruct-2507, gpt-oss-120b,
-  # DeepSeek-V3.2, google/gemma-3-27b-it-fast (proven, lighter).
+  # Good picks on Nebius: Qwen3-235B-A22B-Instruct-2507, deepseek-ai/DeepSeek-V3.2,
+  # google/gemma-3-27b-it (lighter; note: google/gemma-3-27b-it-fast does NOT exist).
   - id: nebius_command_llm
     models:
       - provider: self-hosted

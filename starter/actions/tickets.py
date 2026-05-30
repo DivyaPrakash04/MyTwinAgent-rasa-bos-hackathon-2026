@@ -52,3 +52,8 @@ def normalise_ticket_id(raw: str | None) -> str:
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def reset_demo_tickets() -> None:
+    """Clear ticket store so Act 1 starts on a clean shift (presentation demos)."""
+    save_tickets({})

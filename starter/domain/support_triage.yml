@@ -2,6 +2,7 @@ version: "3.1"
 
 actions:
   - action_create_ticket
+  - action_greet_twin
 
 slots:
   issue_summary:
@@ -11,10 +12,10 @@ slots:
   issue_category:
     type: categorical
     values:
-      - bug
-      - billing
-      - access
-      - other
+      - compliance
+      - prior_auth
+      - inventory
+      - temperature
     mappings:
       - type: from_llm
   issue_priority:
@@ -30,20 +31,43 @@ slots:
     type: text
     mappings:
       - type: from_llm
-  # Set by action_create_ticket — never filled by the LLM.
+  
+  # Session Persistence Slots (controlled by actions, not filled by LLM)
   ticket_id:
     type: text
     mappings:
       - type: controlled
+  has_active_incident:
+    type: bool
+    mappings:
+      - type: controlled
+  last_incident_id:
+    type: text
+    mappings:
+      - type: controlled
+  last_incident_summary:
+    type: text
+    mappings:
+      - type: controlled
+  user_name:
+    type: text
+    mappings:
+      - type: from_llm
 
 responses:
+  utter_ask_user_name:
+    - text: "Hey! I am active and ready. What is your name?"
   utter_ask_issue_summary:
-    - text: "I can log that for you. In a sentence or two, what's going on?"
+    - text: "I can log that compliance ticket for you. What is the active exception or issue in the lab?"
   utter_ask_issue_category:
-    - text: "Got it. Is this a bug, a billing issue, an access problem, or something else?"
+    - text: "Got it. Is this general compliance, a prior-auth issue, inventory discrepancy, or refrigerator temperature excursion?"
   utter_ask_issue_priority:
-    - text: "How urgent is it — low, medium, high, or urgent?"
+    - text: "Understood. How urgent is this clinical exception — low, medium, high, or urgent?"
   utter_ask_contact_email:
-    - text: "What's the best email to send you updates at?"
+    - text: "What's the best email address to send compliance notifications to?"
   utter_ticket_created:
-    - text: "Done — I've logged ticket {ticket_id} as a {issue_priority}-priority {issue_category} issue. Updates will go to {contact_email}."
+    - text: "Done — I've logged incident {ticket_id} as a {issue_priority}-priority {issue_category} exception. Shift updates will go to {contact_email}."
+  utter_welcome_back_with_incident:
+    - text: "Welcome back, Pharmacist {user_name}! I see we have an active Fridge B temperature excursion (incident {last_incident_id}: {last_incident_summary}). Shall we resume following up on the Shingrix quarantine steps?"
+  utter_welcome_clean_shift:
+    - text: "Hi Pharmacist {user_name}! All sensors are green. Ready to co-pilot. How is your shift starting?"

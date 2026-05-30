@@ -1,21 +1,24 @@
 flows:
   log_support_ticket:
     description: >
-      Log a new support or operations ticket for the user. Triggers when the user
-      reports a problem, or wants to open, file, raise, or create a ticket, or asks
-      for help with an issue affecting their team's tools or workflow.
-    # Note: ticket_id is set by action_create_ticket. Slots set in custom actions
-    # persist by default, so it stays available after the flow ends — no need to
-    # list it in persisted_slots (which only accepts collect/set_slots slots).
+      Log a new compliance exception, refrigerator temperature excursion, stock drop, or inventory discrepancy for the pharmacist.
+      Triggers when the user reports an alarm, a problem, or wants to open, raise, or create a compliance incident or ticket in the pharmacy.
     steps:
       - collect: issue_summary
-        description: A short free-text description of the problem the user is reporting.
+        description: A short description of the exception or problem (e.g., Fridge B temperature drop).
       - collect: issue_category
-        description: "The kind of issue: bug, billing, access, or other."
+        description: "The kind of clinical issue: compliance, prior_auth, inventory, or temperature."
       - collect: issue_priority
-        description: "How urgent the issue is: low, medium, high, or urgent."
+        description: "How urgent the incident is: low, medium, high, or urgent."
       - collect: contact_email
-        description: The email address where the user wants ticket updates sent.
+        description: The pharmacist's email address where ticket updates should be sent.
       - action: action_create_ticket
       - action: utter_ticket_created
-      - action: utter_can_do_something_else
+        next:
+          - if: slots.issue_category == "temperature"
+            then:
+              - call: ops_assistant
+                next: END
+          - else:
+              - noop: true
+                next: END

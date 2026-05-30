@@ -1,0 +1,17 @@
+flows:
+  greet_and_resume:
+    description: >
+      Greet the user, initiate a new shift, say hello or hi, or check in. Triggers when
+      the user says hello, hi, greets the coworker, introduces themselves, or initiates contact.
+    steps:
+      - collect: user_name
+        description: The name of the pharmacist or technician currently on shift.
+      - action: action_greet_twin
+        next:
+          - if: slots.has_active_incident
+            then:
+              - action: utter_welcome_back_with_incident
+                next: END
+          - else:
+              - action: utter_welcome_clean_shift
+                next: END

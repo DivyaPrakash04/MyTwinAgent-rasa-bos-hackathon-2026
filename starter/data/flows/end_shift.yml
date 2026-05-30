@@ -1,0 +1,8 @@
+flows:
+  end_shift:
+    description: >
+      End the conversation or shift check-in. Triggers when the user says thanks, goodbye,
+      that is all, nothing else, or they are done for now.
+    steps:
+      - action: utter_goodbye
+        next: END
